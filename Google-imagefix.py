@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 from PIL import Image
 
@@ -14,6 +15,13 @@ print(os.getcwd())
 #for troubleshooting, both print statement help with what is save on the list
 print(image_list)
 
+#creates the directory the updated images will live (if not already there)
+dirExist = os.path.isdir(fixedImgDir)
+if dirExist == False:
+    os.mkdir(fixedImgDir)
+    print('"' + fixedImgDir + '" directory has been created')
+else:
+    print('"' + fixedImgDir + '" directory already exist')
 
 
 
