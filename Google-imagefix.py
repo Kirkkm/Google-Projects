@@ -26,7 +26,8 @@ for brokenImage in image_list:
     fixedImage = bim.convert('RGB')
     fixedImage.thumbnail(size)
     #this was odd, in order for the rotation to save I had to call a save on the same line as the rotation
-    fixedImage.rotate(90,expand = 1).save(fixedImgDir + brokenImage,'JPEG')
+    #also I could not find a way to rotate the image clockwise, only counter clockwise
+    fixedImage.rotate(270,expand = 1,).save(fixedImgDir + brokenImage,'JPEG')
 
 
 
