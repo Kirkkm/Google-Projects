@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import PIL
+from PIL import Image
 import os
 
 '''
@@ -16,22 +16,22 @@ After processing the images, save them in the same path ~/supplier-data/images, 
 size = 600, 400
 
 # sets the variables for the source images and fixed images path
-ImgDir ="/supplier-data/descriptions/images"
-FixedImgDir = "/supplier-data/descriptions/images"
+ImgDir ="/supplier-data/descriptions/images/"
+FixedImgDir = "/supplier-data/descriptions/images/"
 
 # pulls the list of images to be modified
 ImgList = os.listdir(ImgDir)
 
 ######### Pulled from Google-imagefix.py code I wrote ##############
-# loops through all of the images in a give directory, as it loops through it changed the size and roates them
-# after that is done it saves the updated images in a seperate file
-for brokenImage in image_list:
+# loops through all of the images in a given directory, as it loops through it changes the size
+# after that is done it saves the updated images in a separate file
+for originalImage in ImgList:
     #print("updated\\" + brokenImage)
 
-    bim = Image.open(imgDir + brokenImage)
+    bim = Image.open(ImgDir + originalImage)
     fixedImage = bim.convert('RGB')
     fixedImage.thumbnail(size)
     # this was odd, in order for the rotation to save I had to call a save on the same line as the rotation
     # also I could not find a way to rotate the image clockwise, only counter clockwise
-    fixedImage.rotate(270,expand = 1,).save(fixedImgDir + brokenImage,'JPEG')
+    fixedImage.save(FixedImgDir + originalImage,'JPEG')
 
