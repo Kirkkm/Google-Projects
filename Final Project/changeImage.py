@@ -16,8 +16,8 @@ After processing the images, save them in the same path ~/supplier-data/images, 
 size = 600, 400
 
 # sets the variables for the source images and fixed images path
-ImgDir ="/supplier-data/descriptions/images/"
-FixedImgDir = "/supplier-data/descriptions/images/"
+ImgDir ="/supplier-data/images/"
+FixedImgDir = "/supplier-data/images/"
 
 # pulls the list of images to be modified
 ImgList = os.listdir(ImgDir)
