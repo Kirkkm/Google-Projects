@@ -34,4 +34,3 @@ for originalImage in ImgList:
     # this was odd, in order for the rotation to save I had to call a save on the same line as the rotation
     # also I could not find a way to rotate the image clockwise, only counter clockwise
     fixedImage.save(FixedImgDir + originalImage,'JPEG')
-
