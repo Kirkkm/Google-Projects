@@ -16,15 +16,28 @@ including the image associated with the fruit (image_name),
 # variables to use through out the code
 desc_dir = "supplier-data/descriptions/"
 desc_list = os.listdir(desc_dir)
+# sorts the list via file name to match image and description
+desc_list.sort(key=int)
+
 image_dir ="/supplier-data/images/"
 image_list = os.listdir(image_dir)
+# sorts the list via file name to match image and description
+image_list.sort(key=int)
 
-#loop through all of the description files in the directory and put them in a JSON format
-for files in desc_list:
+# TODO: Update this variable to the appropriate ip address provide by the final project
+# url to be used for posting the data
+url = "http://[linux-instance-external-IP]/fruit"
+
+# loop through all of the description & image files in the directory and put them in a JSON format
+for files, images in (desc_list, image_list):
     with open(desc_list + files, "r") as f:
         fruit_description = {"name": f.readline().strip("/n"),
                              "weight": f.readline().strip("/n"),
                              "description": f.readline().strip("/n"),
-                             # TODO: add image code here for finding the appropriate files
-                             "image_name":}
+                             "image_name": images}
         f.close()
+
+        data = requests.post(url, data=fruit_description)
+
+        # statement to raise any errors in the POST
+        data.raise_for_status()
