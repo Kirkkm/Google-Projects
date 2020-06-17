@@ -84,7 +84,7 @@ def main(argv):
   table_data = cars_dict_to_table(data)
 
   # pdf generator method
-  # generate(filename, title, additional_info, table_data)
+  # (filename, title, additional_info, table_data)
   PDF_summary = '<br/>'.join(summary)
   print (PDF_summary)
   generate("/tmp/cars.pdf", "Sales summary for last month", PDF_summary, table_data)
