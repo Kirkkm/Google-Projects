@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import psutil
+import socket
 import shutil
 
 '''
@@ -13,9 +14,29 @@ Moreover, this Python script should send an email if there are problems, such as
     Report an error if available memory is less than 500MB
     Report an error if the hostname "localhost" cannot be resolved to "127.0.0.1"
 
+Complete the script to check the system statistics every 60 seconds, 
+and in event of any issues detected among the ones mentioned above, an email should be sent with the following content:
 '''
 
 # variables for checking the
 cpu = psutil.cpu_percent()
-diskspace = psutil.disk_usage()
-free_memory = psutil.swap_memory().free
+diskspace = psutil.disk_usage().percent
+free_memory = psutil.swap_memory().free / 1000000
+network = socket.gethostbyname('localhost')
+
+
+# checks if the cpu is in 80% usage
+if cpu <= 80:
+    print('CPU usage is over 80% usage, sending report now')
+
+# checks if the disk space is over 80%
+if diskspace <= 80:
+    print('Disk space is over 80%, sending report')
+
+# checks if the available memory is less than 500MB
+if free_memory < 500:
+    print('Free memory is below 500MB, sending report')
+
+# checks if localhost resolves as 127.0.0.1
+if network != '127.0.0.1':
+    print('localhost does not resolve as 127.0.0.1, sending report')
