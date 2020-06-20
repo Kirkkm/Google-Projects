@@ -23,20 +23,25 @@ cpu = psutil.cpu_percent()
 diskspace = psutil.disk_usage().percent
 free_memory = psutil.swap_memory().free / 1000000
 network = socket.gethostbyname('localhost')
-
+subject_line = ""
+email_body = "Please check your system and resolve the issue as soon as possible"
 
 # checks if the cpu is in 80% usage
 if cpu <= 80:
     print('CPU usage is over 80% usage, sending report now')
+    subject_line = "Error - CPU usage is over 80%"
 
 # checks if the disk space is over 80%
 if diskspace <= 80:
     print('Disk space is over 80%, sending report')
+    subject_line = "Error - Available disk space is less than 20%"
 
 # checks if the available memory is less than 500MB
 if free_memory < 500:
     print('Free memory is below 500MB, sending report')
+    subject_line = "Error - Available memory is less than 500MB"
 
 # checks if localhost resolves as 127.0.0.1
 if network != '127.0.0.1':
     print('localhost does not resolve as 127.0.0.1, sending report')
+    subject_line = "Error - localhost cannot be resolved to 127.0.0.1"
