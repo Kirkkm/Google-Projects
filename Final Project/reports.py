@@ -4,6 +4,8 @@ from reportlab.platypus import Paragraph, Spacer, Table, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from datetime import date
 import requests
+from . import run
+
 '''
 Using the reportlab Python library, define the method generate_report to build the PDF reports.
 We have already covered how to generate PDF reports in an earlier lesson;
@@ -32,23 +34,39 @@ weight: 200 lbs
 ...
 '''
 
-# TODO: Update this variable to the appropriate ip address provide by the final project
-# url to be used for getting the data
-url = "http://[linux-instance-external-IP]/fruit"
-
-# TODO: create a get request to pull the data that was just posted in run.py in order to help generate a PDF of the fruit, don't forget to leave comments on what everything does
+# TODO: create a get request to pull the data that was just posted in run.py
+# in order to help generate a PDF of the fruit, don't forget to leave comments on what everything does
 
 # pulls the data to be formatted into a PDF
-data = requests.get(url)
+# data = requests.get(url)
 
 # statement to raise any errors in the GET
-data.raise_for_status()
+# data.raise_for_status()
 
 # generates the PDF
 styles = getSampleStyleSheet()
 today = date.today()
 report = SimpleDocTemplate("/tmp/processed.pdf")
-report_title = Paragraph("Processed Update on " + str(today), styles["h1"])
-report_body = ""
 
-report.build(report_title)
+# this list will store all of the pdf parts in a specified order to be built later
+doc_template = []
+
+report_title = Paragraph("Processed Update on " + str(today), styles["h1"])
+
+doc_template.append(report_title)
+
+# calls a method to in run.py script to read the fruit data from the .txt files and turn it into JSON format
+fruit_data = run.read_data()
+report_body_date = Paragraph("Processed Update on " + date.today() + "\n\n", styles["BodyText"])
+
+doc_template.append(report_body_date)
+
+# iterates through the 2 dimensional dictionary to post each fruits data and image
+for key,value in fruit_data.items():
+    report_body_name = value['name'] + "\n"
+    report_body_weight = value['weight'] + "\n\n"
+
+    doc_template.append(report_body_name,report_body_weight)
+
+
+report.build(doc_template)
