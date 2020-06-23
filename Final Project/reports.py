@@ -41,31 +41,42 @@ weight: 200 lbs
 # data.raise_for_status()
 
 # method to generate/build the PDF file with the fruit data in the .txt files
-def generate_report(self):
+
+
+def generate_report(self,attachment, title, paragraph):
     # generates the PDF
     styles = getSampleStyleSheet()
-    today = date.today()
-    report = SimpleDocTemplate("/tmp/processed.pdf")
 
-    # this list will store all of the pdf parts in a specified order to be built later
     doc_template = []
 
-    report_title = Paragraph("Processed Update on " + str(today), styles["h1"])
+    report_title = Paragraph(title, styles["h1"])
+    report_body= Paragraph(paragraph, styles["BodyText"])
+    doc_template.append(report_title,report_body)
 
-    doc_template.append(report_title)
+    pdf_doc = attachment.build(doc_template)
+    return pdf_doc
+
+
+def main():
+    report_attachment = SimpleDocTemplate("/tmp/processed.pdf")
+    today = date.today()
+    report_title = "Processed Update on " + str(today) + "\n\n"
+
+    # this list will store all of the pdf parts in a specified order to be built later
+    report_body = []
 
     # calls a method to in run.py script to read the fruit data from the .txt files and turn it into JSON format
     fruit_data = run.read_data()
-    report_body_date = Paragraph("Processed Update on " + date.today() + "\n\n", styles["BodyText"])
-
-    doc_template.append(report_body_date)
 
     # iterates through the 2 dimensional dictionary to post each fruits data and image
     for key,value in fruit_data.items():
         report_body_name = value['name'] + "\n"
         report_body_weight = value['weight'] + "\n\n"
 
-        doc_template.append(report_body_name,report_body_weight)
+        report_body.append(report_body_name,report_body_weight)
 
-    pdf_doc = report.build(doc_template)
-    return pdf_doc
+    generate_report(report_attachment,report_title,report_body)
+
+
+if __name__ == "__main__":
+    main()
