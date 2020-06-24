@@ -2,9 +2,6 @@
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus import Paragraph, Spacer, Table, Image
 from reportlab.lib.styles import getSampleStyleSheet
-from datetime import date
-import requests
-from . import run
 
 '''
 Using the reportlab Python library, define the method generate_report to build the PDF reports.
@@ -34,14 +31,6 @@ weight: 200 lbs
 ...
 '''
 
-# pulls the data to be formatted into a PDF
-# data = requests.get(url)
-
-# statement to raise any errors in the GET
-# data.raise_for_status()
-
-# method to generate/build the PDF file with the fruit data in the .txt files
-
 
 def generate_report(self,attachment, title, paragraph):
     # generates the PDF
@@ -49,34 +38,11 @@ def generate_report(self,attachment, title, paragraph):
 
     doc_template = []
 
+    report_attachment = SimpleDocTemplate(attachment)
+
     report_title = Paragraph(title, styles["h1"])
-    report_body= Paragraph(paragraph, styles["BodyText"])
-    doc_template.append(report_title,report_body)
+    report_body = Paragraph(paragraph, styles["BodyText"])
+    doc_template.append(report_title, report_body)
 
-    pdf_doc = attachment.build(doc_template)
+    pdf_doc = report_attachment.build(doc_template)
     return pdf_doc
-
-
-def main():
-    report_attachment = SimpleDocTemplate("/tmp/processed.pdf")
-    today = date.today()
-    report_title = "Processed Update on " + str(today) + "\n\n"
-
-    # this list will store all of the pdf parts in a specified order to be built later
-    report_body = []
-
-    # calls a method to in run.py script to read the fruit data from the .txt files and turn it into JSON format
-    fruit_data = run.read_data()
-
-    # iterates through the 2 dimensional dictionary to post each fruits data and image
-    for key,value in fruit_data.items():
-        report_body_name = value['name'] + "\n"
-        report_body_weight = value['weight'] + "\n\n"
-
-        report_body.append(report_body_name,report_body_weight)
-
-    generate_report(report_attachment,report_title,report_body)
-
-
-if __name__ == "__main__":
-    main()
