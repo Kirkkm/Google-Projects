@@ -41,7 +41,7 @@ def main():
     # this list will store all of the pdf parts in a specified order to be built later
     report_body = []
 
-    # calls a method to in run.py script to read the fruit data from the .txt files and turn it into JSON format
+    # calls a method in run.py script to read the fruit data from the .txt files and turn it into JSON format
     # if this method does not work then need to look at creating a REST GET request
     fruit_data = run.read_data()
 

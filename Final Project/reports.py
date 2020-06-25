@@ -45,4 +45,6 @@ def generate_report(self,attachment, title, paragraph):
     doc_template.append(report_title, report_body)
 
     pdf_doc = report_attachment.build(doc_template)
+
+    print("Report Generated")
     return pdf_doc
