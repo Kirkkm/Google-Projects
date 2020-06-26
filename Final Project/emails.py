@@ -15,16 +15,27 @@ Once you define the generate_email and send_email methods, call the methods unde
 
 
 def generate_email(self, email_from, email_to, subject_line, body, attachment):
+    # sets up the email
     email = EmailMessage()
     email['From'] = email_from
     email['To'] = email_to
     email['Subject'] = subject_line
     email.set_content(body)
 
+    # adds the attachment to the email
     mime_type, _ = mimetypes.guess_type(attachment)
+    mime_type, mime_subtype = mime_type.split('/', 1)
+
+    with open(attachment, 'rb') as ap:
+        email.add_attachment(ap.read(),
+        maintype = mime_type,
+        subtype = mime_subtype,
+        filename = attachment)
 
     print("email generated")
 
 
 def send_email(self):
+    mail_server = smtplib.SMTP_SSL()
+    mail_server.sendmail()
     print("email sent")
