@@ -36,6 +36,19 @@ def generate_email(self, email_from, email_to, subject_line, body, attachment):
     return email
     print("email generated")
 
+# method to generate the error email (with no attachment)
+def generate_error_report(self, email_from, email_to, subject_line, body):
+    # sets up the email
+    email = EmailMessage()
+    email['From'] = email_from
+    email['To'] = email_to
+    email['Subject'] = subject_line
+    email.set_content(body)
+
+    return email
+    print("error email generated")
+
+
 # method to receive the generated email and send it through the appropriate smtp
 def send_email(self, email):
     # TODO: figure out when the smtp ssl will be for this project and fill out below

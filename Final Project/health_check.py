@@ -3,6 +3,7 @@
 import psutil
 import socket
 import shutil
+from . import emails
 
 '''
 This is the last part of the lab, where you will have to write a Python script named health_check.py that will run
@@ -18,11 +19,15 @@ Complete the script to check the system statistics every 60 seconds,
 and in event of any issues detected among the ones mentioned above, an email should be sent with the following content:
 '''
 
-# variables for checking the
+# variables for checking the machine
 cpu = psutil.cpu_percent()
 diskspace = psutil.disk_usage().percent
 free_memory = psutil.swap_memory().free / 1000000
 network = socket.gethostbyname('localhost')
+
+# variables for the email to be sent
+email_from = "automation@example.com"
+email_to = "username@example.com"
 subject_line = ""
 email_body = "Please check your system and resolve the issue as soon as possible"
 
@@ -30,18 +35,26 @@ email_body = "Please check your system and resolve the issue as soon as possible
 if cpu <= 80:
     print('CPU usage is over 80% usage, sending report now')
     subject_line = "Error - CPU usage is over 80%"
+    error_email = emails.generate_error_report(email_from, email_to, subject_line, email_body)
+    emails.send_email(error_email)
 
 # checks if the disk space is over 80%
 if diskspace <= 80:
     print('Disk space is over 80%, sending report')
     subject_line = "Error - Available disk space is less than 20%"
+    error_email = emails.generate_error_report(email_from, email_to, subject_line, email_body)
+    emails.send_email(error_email)
 
 # checks if the available memory is less than 500MB
 if free_memory < 500:
     print('Free memory is below 500MB, sending report')
     subject_line = "Error - Available memory is less than 500MB"
+    error_email = emails.generate_error_report(email_from, email_to, subject_line, email_body)
+    emails.send_email(error_email)
 
 # checks if localhost resolves as 127.0.0.1
 if network != '127.0.0.1':
     print('localhost does not resolve as 127.0.0.1, sending report')
     subject_line = "Error - localhost cannot be resolved to 127.0.0.1"
+    error_email = emails.generate_error_report(email_from, email_to, subject_line, email_body)
+    emails.send_email(error_email)
