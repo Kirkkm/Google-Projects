@@ -3,7 +3,7 @@
 import os
 from datetime import date
 import requests
-from . import run, reports
+from . import run, reports, emails
 
 '''
 Create another script named report_email.py to process supplier fruit description data from supplier-data/descriptions directory. 
@@ -52,7 +52,24 @@ def main():
 
         report_body.append(report_body_name, report_body_weight)
 
-    pdf = reports.generate_report(report_attachment, report_title, report_body)
+    # method's parameters: generate_report(self,attachment, title, paragraph)
+    # method to generate the pdf doc
+
+    reports.generate_report(report_attachment, report_title, report_body)
+
+    # method's parameters: generate_email(self, email_from, email_to, subject_line, body, attachment)
+    # method to generate the email that will be sent out
+
+    email_from = "automation@example.com"
+    email_to = "username@example.com"
+    email_subject = "Upload Completed - Online Fruit Store"
+    email_body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email"
+
+    email = emails.generate_email(email_from, email_to, email_subject, email_body, report_attachment)
+
+    # method's parameters: generate_email(self, email_from, email_to, subject_line, body, attachment)
+    # method to send the generated email
+    emails.send_email(email)
 
 
 if __name__ == "__main__":

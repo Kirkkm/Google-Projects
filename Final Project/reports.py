@@ -31,9 +31,8 @@ weight: 200 lbs
 ...
 '''
 
-
-def generate_report(self,attachment, title, paragraph):
-    # generates the PDF
+# method to generate the PDF file and place it in a directory to be pulled later
+def generate_report(self, attachment, title, paragraph):
     styles = getSampleStyleSheet()
 
     doc_template = []
@@ -44,7 +43,6 @@ def generate_report(self,attachment, title, paragraph):
     report_body = Paragraph(paragraph, styles["BodyText"])
     doc_template.append(report_title, report_body)
 
-    pdf_doc = report_attachment.build(doc_template)
+    report_attachment.build(doc_template)
 
     print("Report Generated")
-    return pdf_doc
