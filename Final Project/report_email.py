@@ -31,7 +31,7 @@ Once you have completed this, call the main method which will process the data a
 
 def main():
 
-    # setting the report's file location/attachment
+    # setting the PDF's file location of where it is going to live
     report_attachment = "/tmp/processed.pdf"
 
     # setting up the Report's Title
@@ -54,12 +54,10 @@ def main():
 
     # method's parameters: generate_report(self,attachment, title, paragraph)
     # method to generate the pdf doc
-
     reports.generate_report(report_attachment, report_title, report_body)
 
     # method's parameters: generate_email(self, email_from, email_to, subject_line, body, attachment)
     # method to generate the email that will be sent out
-
     email_from = "automation@example.com"
     email_to = "username@example.com"
     email_subject = "Upload Completed - Online Fruit Store"

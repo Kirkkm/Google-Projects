@@ -25,7 +25,7 @@ def read_data(self):
     # sorts the list via file name to match image and description
     image_list.sort(key=int)
 
-    # loop through all of the description & image files in the directory and put them in a JSON format
+    # loop through all of the description & image files in the directory and put them into a JSON format
     for files, images in (desc_list, image_list):
         with open(desc_list + files, "r") as f:
             fruit_description = {files:
@@ -45,7 +45,7 @@ url = "http://[linux-instance-external-IP]/fruit"
 fruit_data = read_data()
 
 # iterates through the 2 dimensional dictionary to post each fruits data and image
-for key,value in fruit_data.items():
+for key, value in fruit_data.items():
    data = requests.post(url, data=value)
 
    # statement to raise any errors in the POST

@@ -33,3 +33,5 @@ for originalImage in ImgList:
     fixedImage.thumbnail(size)
     # also I could not find a way to rotate the image clockwise, only counter clockwise
     fixedImage.save(FixedImgDir + originalImage,'JPEG')
+
+    print("Image reformatted")
