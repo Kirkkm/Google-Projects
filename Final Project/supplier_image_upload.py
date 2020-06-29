@@ -24,7 +24,7 @@ ImageList = os.listdir(SupplierImages)
 
 # filters the list using regex to only pull all the JPEG files into a list
 JPEG_finder = re.compile(".*\.jpeg$")
-JPEG_List = list(filter(JPEG_finder, ImageList))
+JPEG_List = list(filter(JPEG_finder.search, ImageList))
 
 # for troubleshooting
 print(JPEG_List)
