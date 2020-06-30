@@ -16,7 +16,7 @@ processed previously and uploads them to the web server fruit catalog
 # variables for the urls and directories needed for this script
 # TODO: change localhost to the ipaddress provided by the project
 url = "http://localhost/upload/"
-SupplierImages = "/supplier-data/images/"
+SupplierImages = "supplier-data/images/"
 
 
 # pulls all the files in the directory
@@ -31,7 +31,7 @@ print(JPEG_List)
 
 # opens & uploads all of the JPEG files to the url provided
 for file in JPEG_List:
-    with open(SupplierImages, 'rb') as opened:
+    with open(SupplierImages + '/' + file, 'rb') as opened:
         r = requests.post(url, files={"file": opened})
         # statement to raise any errors in the POST
         r.raise_for_status()
